@@ -34,9 +34,14 @@ func NewClient(config types.ClientConfig) (*Client, error) {
 	if err != nil {
 		return nil, errors.Wrapf(err, "building config from kube config located at %s", config.ConfigFile)
 	}
-	namespace, _, err := c.Namespace()
-	if err != nil {
-		return nil, errors.Wrap(err, "getting namespace for client")
+
+	namespace := ""
+	if !config.AllNamespaces {
+		n, _, err := c.Namespace()
+		if err != nil {
+			return nil, errors.Wrap(err, "getting namespace for client")
+		}
+		namespace = n
 	}
 
 	client, err := k8s.NewForConfig(cc)
