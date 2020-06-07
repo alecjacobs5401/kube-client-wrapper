@@ -18,7 +18,7 @@ type ClientConfig struct {
 	ConfigFile    string
 	Namespace     string
 	Context       string
-	AllNamespaces string
+	AllNamespaces bool
 }
 
 // PodCondition is a wrapper around a Kubernetes Pod Condition
