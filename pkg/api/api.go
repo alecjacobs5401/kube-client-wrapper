@@ -67,7 +67,7 @@ func (c *Client) Pods(selectors types.PodSelectors) ([]corev1.Pod, error) {
 		for _, name := range selectors.Names {
 			pod, err := podsAPI.Get(name, metav1.GetOptions{})
 			if err != nil && !k8sErrors.IsNotFound(err) {
-				return nil, errors.Wrapf(err, "Pod %s failed to delete!", name)
+				return nil, errors.Wrapf(err, "Pod %s failed to get pod!", name)
 			}
 
 			if err == nil || !k8sErrors.IsNotFound(err) {
