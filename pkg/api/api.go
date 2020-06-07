@@ -91,8 +91,8 @@ func (c *Client) Events(selectors types.EventSelectors) ([]corev1.Event, error) 
 
 // PodLogs grabs the logs for a specific Pod Container. If container is empty string, the default Pod
 // Container will be used.
-func (c *Client) PodLogs(pod, container string) (string, error) {
-	req := c.client.CoreV1().Pods(pod.Namespace).GetLogs(pod, &corev1.PodLogOptions{})
+func (c *Client) PodLogs(pod corev1.Pod, container string) (string, error) {
+	req := c.client.CoreV1().Pods(pod.Namespace).GetLogs(pod.Name, &corev1.PodLogOptions{})
 	podLogs, err := req.Stream()
 	if err != nil {
 		return "", errors.Wrap(err, "streaming log results")
